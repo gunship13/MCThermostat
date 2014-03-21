@@ -1,4 +1,4 @@
-     // DATE 3/20/14
+     // DATE 3/21/14
 // Thermostat Project by Mike Cipolla
 #include <LiquidCrystal.h>
 #include <EEPROM.h>
@@ -129,6 +129,7 @@ struct flashSave {
 unsigned long previousClk_ms       =    0L;
 unsigned long previousTwoSecClk_ms =    0L;
 unsigned long previousTempClk_ms   =    0L;
+unsigned long countDown90Min_ms    =    0L;
 
 // Define several timer durations scaled to mili-seconds
 const unsigned long time250_ms   =  250L; 
@@ -657,7 +658,7 @@ void commandRelays(void)
 **********************************************************************************************
 *  Function: initializeTimers()
 */
-// Call this at starup and after 30 days so as to gracefully reste all the timers before an overflow occurs.
+// Call this at startup and after 30 days so as to gracefully reset all the timers before an overflow occurs.
 // Caution:  Please add any other timers that are created to this routine so they are also reset.
 void initializeTimers(void){
   
@@ -667,6 +668,7 @@ noInterrupts();     // Turn off interrupts
 previousClk_ms       -=  timer0_millis;
 previousTempClk_ms   -=  timer0_millis;
 previousTwoSecClk_ms -=  timer0_millis;
+countDown90Min_ms    -=  timer0_millis;
 timer0_millis        =   0L;   // this is the global Arduino timer being reset to zero
 
 interrupts();      // re-enable interrupts
