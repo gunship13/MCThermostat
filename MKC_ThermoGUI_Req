@@ -1,0 +1,26 @@
+
+MKC Thermostat User Remote Control GUI Interface Requirements
+By:  Mike Cipolla
+Date:  4/5/2014
+Rev: -
+Create a GUI to provide the following inputs:
+•	Select Room Thermostat (int32 thermostatAddress)
+This will identify which thermostat you want to talk to by its Ethernet address.  The input will be in the 123.456.789.ABC format.
+•	Operating Mode (SYS_MODES operateMode)
+	enum SYS_MODES                      
+ {SYS_OFF   , SYS_COOL , SYS_HEAT , SYS_EMR_HEAT,  SYS_AUTO};
+
+The SYS_OFF, SYS_COOL, SYS_HEAT, SYS_EMR_HEAT behave like a typical manual thermostat.  The SYS_AUTO mode will behave where the system will switch between heat and cool automatically to keep the room within the maximum and minimum room temperature commands.
+
+•	Minimum Room Temperature (int minAutoTemp)
+	This is the minimum the room will be allowed to become.  When in SYS_AUTO mode, the furnace will be commanded to heat the room. Use units of degrees Fahrenheit.  See “Special Auto Mode Provisions” below. 
+•	Maximum Room Temperature (int maxAutoTemp)
+	This is the maximum the room will be allowed to become.  When in SYS_AUTO mode, the furnace will be commanded to cool the room. Use units of degrees Fahrenheit.  See “Special Auto Mode Provisions” below.
+•	Fan Always On (boolean sysFanOn)
+	When set TRUE the furnace fan will be on all the time.  When set FALSE the fan will only be commanded on when the furnace is either heating or cooling the room.
+•	Manual Override Temperature Command (int tempCmd)
+	This is the temperature that the room will be maintained at when in either the heating or cooling mode.  Use units of degrees Fahrenheit.  
+
+Special Auto Mode Provisions:
+Special provisions for the Minimum Room Temperature and Maximum Room Temperature used for the Auto Mode are as follows.  The Minimum Room Temperature will always be at least 4 degrees Fahrenheit below the Maximum Temperature Room Command.  The Lowest Minimum Room Temperature allowed shall be 40 degrees Fahrenheit.  The Highest Maximum Room Temperature shall be 99 degrees Fahrenheit.
+
